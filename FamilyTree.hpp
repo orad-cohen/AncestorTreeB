@@ -3,32 +3,38 @@
 #include <iostream>
 
 using namespace std;
+typedef struct node
+{
+    string name;
+    int *level;
+    bool sex;
+    node *mother;
+    node *father;
+} node;
 
-class family{
-    family()
-    {
-        cout << "shiza" << endl;
-    }
-
+class family
+{
+    family();
+    ~family();
     public:
         class Tree
         {
-        public:
-            Tree(string t)
-            {
-                cout << t << endl;
-            };
-            Tree& addFather(string t , string a);
-            Tree& addMother(string, string);
-            string relation(string);
-            Tree& display();
-            string find(string);
-            Tree& remove(string);
-        };   
-    
-        
+           
+            public: 
+            
+                Tree(string t);
+                ~Tree();
+                node AddFather(node *root, string son, string pop, int deepest);
+                node AddMother(node *root, string son, string pop, int deepest);
+                void print2DUtil(node *root, int space);
+                Tree &addFather(string c, string x);
+                Tree &addMother(string c , string x);
+                string relation(string c);
+                Tree &display();
+                string find(string c);
+                node* relation(int level,string name, node *tmp);
+                Tree &remove(string c);
+        };
 
-    } ;// namespace Tree
-
-    
+}; // namespace Tree
     

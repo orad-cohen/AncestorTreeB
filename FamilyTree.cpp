@@ -3,28 +3,222 @@
 using namespace std;
 
 typedef family::Tree tree;
+node *head;
 
-tree &tree::addFather(string t, string a)
+family::Tree::Tree(string t)
 {
+    head = new node;
+    head->name=t;
+    head->level = (int *)malloc(sizeof(int)) ;
+    head->father = NULL;
+    head->mother = NULL;
+}
+family::Tree::~Tree(){
+    node *tmp = head;
+    delete tmp
+
+}
+
+family::Tree::RecursiveDelete(*node tmp){
+
+}
+
+ family::Tree & family::Tree::addFather(string son, string pop)
+{
+    AddFather(head, son , pop,0);
     return *this;
 }
-tree &tree::addMother(string t, string x)
+
+node family::Tree::AddFather(node *root, string son, string pop, int deepest)
 {
+    if(root->name==son){
+        int tmp = *head->level;
+        
+        if (tmp < deepest)
+        {   
+            *head->level=deepest;
+        };
+       
+        root->father = new node;
+        
+        root = root->father;
+       
+        root->level = new int ;
+        
+        *root->level =deepest+1;
+      
+        root->sex = 1;
+        root->name = pop;
+        root->father=NULL;
+        root->mother=NULL;
+        
+                }
+    else{
+        if(root->father!=NULL){
+            AddFather(root->father,son,pop,deepest+1);
+        }
+        if(root->mother!=NULL){
+            AddFather(root->mother,son,pop,deepest+1);
+
+        }}
+
+    return *root;
+}
+
+family::Tree &family::Tree::addMother(string son, string mom)
+{
+    AddMother(head,son,mom,0);
     return *this;
 }
-string tree::relation(string)
+node family::Tree::AddMother(node *root, string son, string mom, int deepest)
 {
+
+    if (root->name == son)
+    {
+        if (*head->level < deepest)
+        {
+            *head->level = deepest;
+        };
+        root->mother = new node;
+        root = root->mother;
+        root->father = NULL;
+        root->mother = NULL;
+        root->level = new int;
+        *root->level = deepest + 1;
+        root->sex = 0;
+        root->name = mom;
+    }
+    else
+    {
+        if (root->father != NULL)
+        {
+            AddMother(root->father, son, mom,deepest+1);
+        }
+        if (root->mother != NULL)
+        {
+            AddMother(root->mother, son, mom,deepest+1);
+        }
+    }
+    return *root;
+}
+
+string family::Tree::relation(string name)
+{
+   
+    node *data;
+    data = relation(0, name, head);
+    string ans = "";
+   
+    int RealLevel = *data->level;
+    if(RealLevel==-1){
+        ans += "unrelated";
+        return ans;
+    }
+    while (RealLevel > 2)
+    {
+        ans+="great-";
+        RealLevel--;
+    }
+    if (RealLevel == 2)
+    {
+        ans+="grand";
+        RealLevel--;
+    }
+    if (RealLevel == 1)
+    {
+        if (data->sex == 0)
+        {
+            return ans += "mother";
+        }
+        else
+        {
+            return ans += "father";
+        }
+    }
+             return "me";
+}
+node * family::Tree::relation(int level, string name, node *tmp)
+{
+
+    if (tmp->name == name)
+    {       
+        
+        return tmp;
+    }
+    else
+    {
+        if(tmp->father==NULL&&tmp->mother==NULL){
+            node *err = new node;
+            err->level=new int;
+            *err->level=-1;
+            
+            return err;
+        }
+        node *lvl1, *lvl2;
+        if(tmp->father!=NULL){
+            
+            lvl1 = relation(level+1,name,tmp->father);
+            
+        }
+        if(tmp->mother!=NULL){
+            lvl2 = relation(level+1, name, tmp->mother);
+              
+            
+        }
+        
+        if(*(lvl1->level) < *(lvl2->level)){
+            
+            return lvl2;
+        }
+        else{
+            
+            return lvl1;
+        }
+        
+
+    }
+    throw std::invalid_argument("not found");
+}
+
+family::Tree &family::Tree::display()
+{
+    print2DUtil(head,0);
+    return *this;
+}
+void family::Tree::print2DUtil(node *root, int space)
+{
+    // Base case
+    if (root == NULL)
+        return;
+
+    // Increase distance between levels
+    space += 10;
+    print2DUtil(root->mother, space);
+
+    for (int i = 10; i < space; i++)
+        cout << " ";
+    cout << root->name << "\n";
+    
+    // Process right child first
+    
+
+    // Print current node after space
+    // count
+    cout << endl;
+    
+
+    // Process left child
+    print2DUtil(root->father, space);
+}
+
+string family::Tree::find(string name)
+{
+    
     return "placeholder";
 }
-tree &tree::display()
-{
-    return *this;
-}
-string tree::find(string)
-{
-    return "placeholder";
-}
-tree &tree::remove(string t)
+
+
+tree &family::Tree::remove(string t)
 {
     return *this;
 }
