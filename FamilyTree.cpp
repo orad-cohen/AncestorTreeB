@@ -181,7 +181,8 @@ node * family::Tree::relation(int level, string name, node *tmp)
             
             return err_node;
         }
-        node *lvl1, *lvl2;
+        node *lvl1 = err_node;
+        node *lvl2 = err_node;
         if(tmp->father!=NULL){
             
             lvl1 = relation(level+1,name,tmp->father);
