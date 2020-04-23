@@ -20,8 +20,8 @@ class family
         class Tree
         {
            
-            public: 
-            
+            public:
+                node *head;
                 Tree(string t);
                 ~Tree();
                 node AddFather(node *root, string son, string pop, int deepest);
@@ -34,7 +34,6 @@ class family
                 string find(string c);
                 node* relation(int level,string name, node *tmp);
                 Tree &remove(string c);
-        };
-
-}; // namespace Tree
-    
+                void FreeNode(node *tmp);
+                };
+                }; // namespace Tree

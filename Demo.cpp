@@ -22,9 +22,9 @@ int main() {
 
 	//T.display();                        // displays the tree in a human-friendly format.
 	
-	cout << T.relation("Yaakov") << endl;  // prints "father"
+	//cout << T.relation("Yaakov") << endl;  // prints "father"
 	cout << T.relation("Rachel") << endl;  // prints "mother"
-	cout << T.relation("Rivka") << endl;  // prints "grandmother"
+	/*cout << T.relation("Rivka") << endl;  // prints "grandmother"
 	cout << T.relation("Avraham") << endl;  // prints "great-grandfather"
 	cout << T.relation("Terah") << endl;  // prints "great-great-grandfather"
 	cout << T.relation("xyz") << endl;  // prints "unrelated"

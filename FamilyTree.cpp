@@ -4,22 +4,46 @@ using namespace std;
 
 typedef family::Tree tree;
 node *head;
+node *err_node;
 
 family::Tree::Tree(string t)
 {
-    head = new node;
+    head = (node *)malloc(sizeof(node));
     head->name=t;
-    head->level = (int *)malloc(sizeof(int)) ;
+    head->level = (int *)calloc(1,sizeof(int)) ;
+
     head->father = NULL;
     head->mother = NULL;
+    err_node = (node *)malloc(sizeof(node));
+    err_node->name = " ";
+    err_node-> level = (int *)malloc(sizeof(int));
+    *err_node->level = -1;
 }
 family::Tree::~Tree(){
-    node *tmp = head;
-    delete tmp
+    FreeNode(head);
+    FreeNode(err_node);
 
 }
 
-family::Tree::RecursiveDelete(*node tmp){
+void family::Tree::FreeNode(node * tmp){
+
+    if(tmp->father==NULL&&tmp->mother==NULL){
+        delete tmp->level;
+        
+        delete tmp;
+        return;
+    }
+    else{
+        if(tmp->father!=NULL){
+            FreeNode(tmp->father);
+        }
+        if(tmp->mother!=NULL){
+            FreeNode(tmp->mother);
+        }
+        
+    }
+    delete tmp->level;
+    delete tmp;
 
 }
 
@@ -39,12 +63,12 @@ node family::Tree::AddFather(node *root, string son, string pop, int deepest)
             *head->level=deepest;
         };
        
-        root->father = new node;
+        root->father = (node *)malloc(sizeof(node));
         
         root = root->father;
-       
-        root->level = new int ;
-        
+
+        root->level = (int *)malloc(sizeof(int));
+
         *root->level =deepest+1;
       
         root->sex = 1;
@@ -79,14 +103,15 @@ node family::Tree::AddMother(node *root, string son, string mom, int deepest)
         {
             *head->level = deepest;
         };
-        root->mother = new node;
+        root->mother = (node *)malloc(sizeof(node));
         root = root->mother;
         root->father = NULL;
         root->mother = NULL;
-        root->level = new int;
+        root->level = (int *)malloc(sizeof(int));
         *root->level = deepest + 1;
         root->sex = 0;
         root->name = mom;
+        
     }
     else
     {
@@ -110,6 +135,10 @@ string family::Tree::relation(string name)
     string ans = "";
    
     int RealLevel = *data->level;
+    if(RealLevel>20){
+        cout << "level :" << RealLevel << endl;
+        throw std::invalid_argument("blah");
+    }
     if(RealLevel==-1){
         ans += "unrelated";
         return ans;
@@ -135,7 +164,7 @@ string family::Tree::relation(string name)
             return ans += "father";
         }
     }
-             return "me";
+    return "me";
 }
 node * family::Tree::relation(int level, string name, node *tmp)
 {
@@ -148,11 +177,9 @@ node * family::Tree::relation(int level, string name, node *tmp)
     else
     {
         if(tmp->father==NULL&&tmp->mother==NULL){
-            node *err = new node;
-            err->level=new int;
-            *err->level=-1;
             
-            return err;
+            
+            return err_node;
         }
         node *lvl1, *lvl2;
         if(tmp->father!=NULL){
@@ -167,6 +194,7 @@ node * family::Tree::relation(int level, string name, node *tmp)
         }
         
         if(*(lvl1->level) < *(lvl2->level)){
+
             
             return lvl2;
         }

@@ -1,15 +1,14 @@
 #!make -f
 
 CXX=clang++-9 
-CXXFLAGS=-std=c++2a
+CXXFLAGS=-std=c++2a -g
 
 HEADERS := $(wildcard *.h*)
 TEACHER_SOURCES := Demo.cpp TestCounter.cpp Test.cpp
 STUDENT_SOURCES := $(filter-out $(TEACHER_SOURCES), $(wildcard *.cpp))
 STUDENT_OBJECTS := $(subst .cpp,.o,$(STUDENT_SOURCES))
 
-run: demo
-	./$^
+all:demo
 
 demo: Demo.o $(STUDENT_OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o demo
