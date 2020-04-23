@@ -19,17 +19,20 @@ int main() {
 	 .addMother("Yaakov", "Rivka")
 	 .addFather("Isaac", "Avraham")
 	 .addFather("Avraham", "Terah");
-
-	//T.display();                        // displays the tree in a human-friendly format.
 	
-	//cout << T.relation("Yaakov") << endl;  // prints "father"
+	T.display();                        // displays the tree in a human-friendly format.
+	
+	cout << T.relation("Yaakov") << endl;  // prints "father"
 	cout << T.relation("Rachel") << endl;  // prints "mother"
-	/*cout << T.relation("Rivka") << endl;  // prints "grandmother"
+	cout << T.relation("Rivka") << endl;  // prints "grandmother"
 	cout << T.relation("Avraham") << endl;  // prints "great-grandfather"
 	cout << T.relation("Terah") << endl;  // prints "great-great-grandfather"
 	cout << T.relation("xyz") << endl;  // prints "unrelated"
 	cout << T.relation("Yosef") << endl;  // prints "me"*/
-	
+
+	T.remove("Terah");
+	T.display();
+	//T.display();
 	/*
 	cout << T.find("mother") << endl;  // prints "Rachel"
 	cout << T.find("great-great-grandfather") << endl;  // prints "Terah"

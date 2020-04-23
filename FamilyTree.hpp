@@ -34,6 +34,7 @@ class family
                 string find(string c);
                 node* relation(int level,string name, node *tmp);
                 Tree &remove(string c);
+                void remove(node *root, string son);
                 void FreeNode(node *tmp);
                 };
                 }; // namespace Tree

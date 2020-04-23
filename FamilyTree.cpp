@@ -11,7 +11,6 @@ family::Tree::Tree(string t)
     head = (node *)malloc(sizeof(node));
     head->name=t;
     head->level = (int *)calloc(1,sizeof(int)) ;
-
     head->father = NULL;
     head->mother = NULL;
     err_node = (node *)malloc(sizeof(node));
@@ -22,14 +21,12 @@ family::Tree::Tree(string t)
 family::Tree::~Tree(){
     FreeNode(head);
     FreeNode(err_node);
-
 }
 
 void family::Tree::FreeNode(node * tmp){
 
     if(tmp->father==NULL&&tmp->mother==NULL){
         delete tmp->level;
-        
         delete tmp;
         return;
     }
@@ -44,10 +41,19 @@ void family::Tree::FreeNode(node * tmp){
     }
     delete tmp->level;
     delete tmp;
-
 }
-
- family::Tree & family::Tree::addFather(string son, string pop)
+family::Tree & family::Tree::remove(string nodeToRemove)
+{
+    remove(head, nodeToRemove);
+    return *this;
+}
+void family::Tree::remove(node * node, string nodeToRemove)
+{
+    if(node->name == nodeToRemove) FreeNode(node);
+    else if(node->father != NULL) remove(node->father, nodeToRemove);
+    else if(node->mother != NULL) remove(node->mother, nodeToRemove);
+}
+family::Tree & family::Tree::addFather(string son, string pop)
 {
     AddFather(head, son , pop,0);
     return *this;
@@ -57,12 +63,7 @@ node family::Tree::AddFather(node *root, string son, string pop, int deepest)
 {
     if(root->name==son){
         int tmp = *head->level;
-        
-        if (tmp < deepest)
-        {   
-            *head->level=deepest;
-        };
-       
+    
         root->father = (node *)malloc(sizeof(node));
         
         root = root->father;
@@ -99,10 +100,6 @@ node family::Tree::AddMother(node *root, string son, string mom, int deepest)
 
     if (root->name == son)
     {
-        if (*head->level < deepest)
-        {
-            *head->level = deepest;
-        };
         root->mother = (node *)malloc(sizeof(node));
         root = root->mother;
         root->father = NULL;
@@ -111,7 +108,6 @@ node family::Tree::AddMother(node *root, string son, string mom, int deepest)
         *root->level = deepest + 1;
         root->sex = 0;
         root->name = mom;
-        
     }
     else
     {
@@ -129,11 +125,9 @@ node family::Tree::AddMother(node *root, string son, string mom, int deepest)
 
 string family::Tree::relation(string name)
 {
-   
     node *data;
     data = relation(0, name, head);
     string ans = "";
-   
     int RealLevel = *data->level;
     if(RealLevel>20){
         cout << "level :" << RealLevel << endl;
@@ -171,14 +165,12 @@ node * family::Tree::relation(int level, string name, node *tmp)
 
     if (tmp->name == name)
     {       
-        
         return tmp;
     }
     else
     {
-        if(tmp->father==NULL&&tmp->mother==NULL){
-            
-            
+        if(tmp->father==NULL&&tmp->mother==NULL)
+        {       
             return err_node;
         }
         node *lvl1 = err_node;
@@ -247,7 +239,4 @@ string family::Tree::find(string name)
 }
 
 
-tree &family::Tree::remove(string t)
-{
-    return *this;
-}
+
