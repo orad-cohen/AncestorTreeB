@@ -5,18 +5,17 @@
 using namespace std;
 typedef struct node
 {
-    string name;
+    string *name;
     int *level;
     bool sex;
     node *mother;
     node *father;
 } node;
 
-class family
+namespace family
 {
-    family();
-    ~family();
-    public:
+    
+   
         class Tree
         {
            
@@ -24,8 +23,8 @@ class family
                 node *head;
                 Tree(string t);
                 ~Tree();
-                node AddFather(node *root, string son, string pop, int deepest);
-                node AddMother(node *root, string son, string pop, int deepest);
+                bool AddFather(node *root, string son, string pop, int deepest);
+                bool AddMother(node *root, string son, string pop, int deepest);
                 void print2DUtil(node *root, int space);
                 Tree &addFather(string c, string x);
                 Tree &addMother(string c , string x);
@@ -34,7 +33,8 @@ class family
                 string find(string c);
                 node* relation(int level,string name, node *tmp);
                 Tree &remove(string c);
-                void remove(node *root, string son);
+                bool remove(node *root, string son);
                 void FreeNode(node *tmp);
+                string  find(node *tmp, int level, int sex);
                 };
                 }; // namespace Tree

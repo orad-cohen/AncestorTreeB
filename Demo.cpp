@@ -4,7 +4,7 @@
  * First version by Adam Lev-Ari,  2019-12
  * Second version by Erel Segal-Halevi, 2020-04
  */
-
+/*
 #include "FamilyTree.hpp"
 
 #include <iostream>
@@ -28,12 +28,12 @@ int main() {
 	cout << T.relation("Avraham") << endl;  // prints "great-grandfather"
 	cout << T.relation("Terah") << endl;  // prints "great-great-grandfather"
 	cout << T.relation("xyz") << endl;  // prints "unrelated"
-	cout << T.relation("Yosef") << endl;  // prints "me"*/
+	cout << T.relation("Yosef") << endl;  // prints "me"
 
 	T.remove("Terah");
 	T.display();
-	//T.display();
-	/*
+	
+	
 	cout << T.find("mother") << endl;  // prints "Rachel"
 	cout << T.find("great-great-grandfather") << endl;  // prints "Terah"
 	try {
@@ -44,6 +44,7 @@ int main() {
 
 	T.remove("Avraham"); // removes Avraham and Terah
 	cout << T.relation("Terah") << endl;  // prints "unrelated"
-*/
+
     return 0;
 }
+* /
